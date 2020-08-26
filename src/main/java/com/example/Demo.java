@@ -1,5 +1,7 @@
 package com.example;
 
+import java.util.Arrays;
+
 public class Demo {
 
     public String run() {
@@ -85,9 +87,12 @@ public class Demo {
             whiteChars[i] = white[i].charAt(1);
         }
 
+        Arrays.sort(blackNumbers);
+        Arrays.sort(whiteNumbers);
         blackCards.setCardNumber(blackNumbers);
         blackCards.setCardChar(blackChars);
         whiteCards.setCardNumber(whiteNumbers);
         whiteCards.setCardChar(whiteChars);
     }
+
 }

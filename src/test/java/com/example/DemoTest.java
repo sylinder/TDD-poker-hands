@@ -20,11 +20,23 @@ public class DemoTest {
     }
 
     @Test
-    void should_return_white_win_when_compare_given_black_2H3D5S9CKD_and_white_2C3H4S8CAH() {
+    void should_return_white_win_when_compare_high_card_given_black_2H3D5S9CKD_and_white_2C3H4S8CAH() {
         //given
         String input = "2H 3D 5S 9C KD 2C 3H 4S 8C AH";
 
-        //when compare
+        //when compare high card
+        String result = demo.compareHighCard(input);
+
+        //then
+        assertThat(result).isEqualTo("White wins. - with high card: Ace");
+    }
+
+    @Test
+    void should_return_white_win_when_compare_high_card_unsorted_given_black_KH3D5S9C2D_and_white_8CAH4S3C2H() {
+        //given
+        String input = "KH 3D 5S 9C 2D 8C AH 4S 3C 2H";
+
+        //when compare high card
         String result = demo.compareHighCard(input);
 
         //then
