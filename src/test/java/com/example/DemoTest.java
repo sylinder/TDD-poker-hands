@@ -66,4 +66,16 @@ public class DemoTest {
         //then
         assertThat(result).isEqualTo("White wins. - with pair of 3");
     }
+
+    @Test
+    void should_return_white_win_when_compare_pair_given_black_2H2DKS9C8D_and_white_2C2HAS8C7H() {
+        //given
+        String input = "2H 2D KS 9C 8D 2C 2H AS 8C 7H";
+
+        //when compare high card
+        String result = demo.comparePair(input);
+
+        //then
+        assertThat(result).isEqualTo("White wins. - with high card: Ace");
+    }
 }

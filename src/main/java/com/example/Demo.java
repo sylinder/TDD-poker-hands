@@ -52,10 +52,12 @@ public class Demo {
 
         if (pairNumberOfBlack == -1 && pairNumberOfWhite == -1) {
             return null;
-        } else if( pairNumberOfBlack > pairNumberOfWhite) {
+        } else if (pairNumberOfBlack > pairNumberOfWhite) {
             return "Black wins. - with pair of " + convertNumberToString(pairNumberOfBlack);
         } else if (pairNumberOfBlack < pairNumberOfWhite) {
             return "White wins. - with pair of " + convertNumberToString(pairNumberOfWhite);
+        } else if (pairNumberOfBlack == pairNumberOfWhite) {
+            return compareHighCard(input);
         }
         return null;
 
