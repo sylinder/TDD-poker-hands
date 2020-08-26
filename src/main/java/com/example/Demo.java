@@ -36,21 +36,29 @@ public class Demo {
         int[] blackNumbers = blackCards.getCardNumber();
         int[] whiteNumbers = whiteCards.getCardNumber();
 
+        int pairNumberOfBlack = -1;
+        int pairNumberOfWhite = -1;
         for (int i = 0; i < blackNumbers.length - 1; i++) {
             if (blackNumbers[i] == blackNumbers[i + 1]) {
-                int tmp = blackNumbers[i];
-                return "Black wins. - with pair of " + convertNumberToString(tmp);
+                pairNumberOfBlack = blackNumbers[i];
             }
         }
 
         for (int i = 0; i < whiteNumbers.length - 1; i++) {
             if (whiteNumbers[i] == whiteNumbers[i + 1]) {
-                int tmp = whiteNumbers[i];
-                return "White wins. - with pair of " + convertNumberToString(tmp);
+                pairNumberOfWhite = whiteNumbers[i];
             }
         }
 
+        if (pairNumberOfBlack == -1 && pairNumberOfWhite == -1) {
+            return null;
+        } else if( pairNumberOfBlack > pairNumberOfWhite) {
+            return "Black wins. - with pair of " + convertNumberToString(pairNumberOfBlack);
+        } else if (pairNumberOfBlack < pairNumberOfWhite) {
+            return "White wins. - with pair of " + convertNumberToString(pairNumberOfWhite);
+        }
         return null;
+
     }
 
 
