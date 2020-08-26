@@ -1,6 +1,7 @@
 package com.example;
 
 import java.util.Arrays;
+import java.util.HashMap;
 
 public class Demo {
 
@@ -26,6 +27,32 @@ public class Demo {
         }
         return "Tie";
     }
+
+
+    public String comparePair(String input) {
+        Cards blackCards = new Cards();
+        Cards whiteCards = new Cards();
+        handleInput(input, blackCards, whiteCards);
+        int[] blackNumbers = blackCards.getCardNumber();
+        int[] whiteNumbers = whiteCards.getCardNumber();
+
+        for (int i = 0; i < blackNumbers.length - 1; i++) {
+            if (blackNumbers[i] == blackNumbers[i + 1]) {
+                int tmp = blackNumbers[i];
+                return "Black wins. - with pair of " + convertNumberToString(tmp);
+            }
+        }
+
+        for (int i = 0; i < whiteNumbers.length - 1; i++) {
+            if (whiteNumbers[i] == whiteNumbers[i + 1]) {
+                int tmp = whiteNumbers[i];
+                return "White wins. - with pair of " + convertNumberToString(tmp);
+            }
+        }
+
+        return null;
+    }
+
 
     public int convertCharToNum(char ch) {
         if (ch == 'T') {
@@ -94,5 +121,6 @@ public class Demo {
         whiteCards.setCardNumber(whiteNumbers);
         whiteCards.setCardChar(whiteChars);
     }
+
 
 }
