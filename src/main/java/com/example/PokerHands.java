@@ -96,6 +96,9 @@ public class PokerHands {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
+        if (rank == Rank.STRAIGHT_FLUSH.getRank()) {
+            return compareStraightFlush(blackNumbers, whiteNumbers);
+        }
         if (rank == Rank.FOUR_KIND.getRank()) {
             return compareFourOfKind(blackNumbers, whiteNumbers);
         }
@@ -124,6 +127,13 @@ public class PokerHands {
         }
 
         return compareHighCard(blackNumbers, whiteNumbers);
+    }
+
+    private String compareStraightFlush(int[] blackNumbers, int[] whiteNumbers) {
+        if (blackNumbers[4] > whiteNumbers[4]) {
+            return "Black wins. - with straight flush: " + convertNumberToString(blackNumbers[4]);
+        }
+        return "White wins. - with straight flush: " + convertNumberToString(whiteNumbers[4]);
     }
 
     private String compareFourOfKind(int[] blackNumbers, int[] whiteNumbers) {
