@@ -25,7 +25,7 @@ public class PokerHandsTest {
         String input = "2H 3D 5S 9C KD 2C 3H 4S 8C AH";
 
         //when compare high card
-        String result = pokerHands.compareHighCard(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("White wins. - with high card: Ace");
@@ -37,7 +37,7 @@ public class PokerHandsTest {
         String input = "KH 3D 5S 9C 2D 8C AH 4S 3C 2H";
 
         //when compare high card
-        String result = pokerHands.compareHighCard(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("White wins. - with high card: Ace");
@@ -49,7 +49,7 @@ public class PokerHandsTest {
         String input = "2H 2D 5S 9C KD 2C 3H 4S 8C AH";
 
         //when compare high card
-        String result = pokerHands.comparePair(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("Black wins. - with pair of 2");
@@ -61,7 +61,7 @@ public class PokerHandsTest {
         String input = "2H 2D 5S 9C KD 3C 3H 4S 8C AH";
 
         //when compare high card
-        String result = pokerHands.comparePair(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("White wins. - with pair of 3");
@@ -73,7 +73,7 @@ public class PokerHandsTest {
         String input = "2H 2D KS 9C 8D 2C 2H AS 8C 7H";
 
         //when compare high card
-        String result = pokerHands.comparePair(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("White wins. - with high card: Ace");
@@ -85,7 +85,7 @@ public class PokerHandsTest {
         String input = "3H 3D 5S 9C 5D 3H 3D 4S 9C 4D";
 
         //when
-        String result= pokerHands.compareTwoPairs(input);
+        String result= pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("Black wins. - with two pairs: 5");
@@ -97,7 +97,7 @@ public class PokerHandsTest {
         String input = "3H 3D 5S 9C 9D 3H 3D 5S 9C 6D";
 
         //when
-        String result = pokerHands.compareTwoPairs(input);
+        String result = pokerHands.playGame(input);
 
         //then
         assertThat(result).isEqualTo("Black wins. - with two pairs: 9");

@@ -3,7 +3,9 @@ package com.example;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class PokerHands {
 
@@ -11,10 +13,73 @@ public class PokerHands {
         return "ABC";
     }
 
-    public String compareHighCard(String input) {
+    public String playGame(String input) {
         PokerCards blackPokerCards = new PokerCards();
         PokerCards whitePokerCards = new PokerCards();
         handleInput(input, blackPokerCards, whitePokerCards);
+
+        int blackRank = getRank(blackPokerCards);
+        int whiteRank = getRank(whitePokerCards);
+
+        if (blackRank < whiteRank) {
+            String result = "White wins. - with ";
+            result += handleNoEqualRank(whiteRank, whitePokerCards);
+            return result;
+        }
+
+        if (blackRank > whiteRank) {
+            String result = "Black wins. - with ";
+            result += handleNoEqualRank(blackRank, blackPokerCards);
+            return result;
+        }
+
+        return handleEqualRank(blackRank, blackPokerCards, whitePokerCards);
+
+    }
+
+
+    public String handleNoEqualRank(int rank, PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        if (rank == Rank.TWO_PAIR.getRank()) {
+            int first = -1;
+            int second = -1;
+            boolean isFirst = true;
+            for (int i = 0; i < cardNumber.length - 1; i++) {
+                if (cardNumber[i] == cardNumber[i + 1] && isFirst) {
+                    first = cardNumber[i];
+                    isFirst = false;
+                } else if (cardNumber[i] == cardNumber[i + 1]) {
+                    second = cardNumber[i];
+                }
+            }
+            return "two pairs: " + second;
+        }
+        if (rank == Rank.PAIR.getRank()) {
+            int number = -1;
+            for (int i = 0; i < cardNumber.length - 1; i++) {
+                if (cardNumber[i] == cardNumber[i + 1]) {
+                    number = cardNumber[i];
+                }
+            }
+            return "pair of " + number;
+        }
+        return null;
+    }
+
+    public String handleEqualRank(int rank, PokerCards blackPokerCards, PokerCards whitePokerCards) {
+
+        if (rank == Rank.TWO_PAIR.getRank()) {
+            return compareTwoPairs(blackPokerCards, whitePokerCards);
+        }
+
+        if (rank == Rank.PAIR.getRank()) {
+            return comparePair(blackPokerCards, whitePokerCards);
+        }
+
+        return compareHighCard(blackPokerCards, whitePokerCards);
+    }
+
+    public String compareHighCard(PokerCards blackPokerCards, PokerCards whitePokerCards) {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
         for (int index = blackNumbers.length - 1; index >= 0; index--) {
@@ -31,10 +96,7 @@ public class PokerHands {
     }
 
 
-    public String comparePair(String input) {
-        PokerCards blackPokerCards = new PokerCards();
-        PokerCards whitePokerCards = new PokerCards();
-        handleInput(input, blackPokerCards, whitePokerCards);
+    public String comparePair(PokerCards blackPokerCards, PokerCards whitePokerCards) {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
@@ -58,17 +120,11 @@ public class PokerHands {
             return "Black wins. - with pair of " + convertNumberToString(pairNumberOfBlack);
         } else if (pairNumberOfBlack < pairNumberOfWhite) {
             return "White wins. - with pair of " + convertNumberToString(pairNumberOfWhite);
-        } else if (pairNumberOfBlack == pairNumberOfWhite) {
-            return compareHighCard(input);
         }
-        return null;
-
+        return compareHighCard(blackPokerCards, whitePokerCards);
     }
 
-    public String compareTwoPairs(String input) {
-        PokerCards blackPokerCards = new PokerCards();
-        PokerCards whitePokerCards = new PokerCards();
-        handleInput(input, blackPokerCards, whitePokerCards);
+    public String compareTwoPairs(PokerCards blackPokerCards, PokerCards whitePokerCards) {
         int blackRank = getRank(blackPokerCards);
         int whiteRank = getRank(whitePokerCards);
         if (blackRank == Rank.TWO_PAIR.getRank() && whiteRank == Rank.PAIR.getRank()) {
@@ -134,16 +190,32 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isTwoPair(pokerCards)) {
+            return Rank.TWO_PAIR.getRank();
+        }
+        if (isPair(pokerCards)) {
+            return Rank.PAIR.getRank();
+        }
+        return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isPair(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        Set<Integer> set = new HashSet<>();
+        for (Integer item : cardNumber) {
+            set.add(item);
+        }
+        return set.size() == 4;
+    }
+
+    private boolean isTwoPair(PokerCards pokerCards) {
         int[] cardNumber = pokerCards.getCardNumber();
         Map<Integer, Integer> map = new HashMap<>();
         for (Integer item : cardNumber) {
             map.put(item, map.getOrDefault(item, 0) + 1);
         }
-        if (map.keySet().size() == 5) {
-            return Rank.HIGH_CARD.getRank();
-        }
-        if (map.keySet().size() == 4) {
-            return Rank.PAIR.getRank();
+        if (map.keySet().size() != 3) {
+            return false;
         }
         ArrayList<Integer> arrayList = new ArrayList<>();
         for (Integer item : map.values()) {
@@ -151,9 +223,9 @@ public class PokerHands {
         }
         arrayList.sort((o1, o2) -> o1 - o2);
         if (arrayList.get(1) != 2 && arrayList.get(2) != 2) {
-            return Rank.TWO_PAIR.getRank();
+            return false;
         }
-        return -1;
+        return true;
     }
 
     public int convertCharToNum(char ch) {
@@ -223,7 +295,5 @@ public class PokerHands {
         whitePokerCards.setCardNumber(whiteNumbers);
         whitePokerCards.setCardChar(whiteChars);
     }
-
-
 
 }
