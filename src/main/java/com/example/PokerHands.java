@@ -42,11 +42,14 @@ public class PokerHands {
         int[] cardNumber = pokerCards.getCardNumber();
         char[] cardChar = pokerCards.getCardChar();
 
+        if (rank == Rank.FOUR_KIND.getRank()) {
+            return "four of a kind: " + convertNumberToString(cardNumber[2]);
+        }
         if (rank == Rank.FULL_HOUSE.getRank()) {
             int first = cardNumber[0];
             int last = cardNumber[cardNumber.length - 1];
             int diff = first == cardNumber[2] ? last : first;
-            return "full house: " + cardNumber[2] + " over " + diff;
+            return "full house: " + convertNumberToString(cardNumber[2]) + " over " + convertNumberToString(diff);
         }
         if (rank == Rank.FLUSH.getRank()) {
             return "flush: " + cardChar[0];
@@ -239,6 +242,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isFourOfKind(pokerCards)) {
+            return Rank.FOUR_KIND.getRank();
+        }
         if (isFullHouse(pokerCards)) {
             return Rank.FULL_HOUSE.getRank();
         }
@@ -258,6 +264,20 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isFourOfKind(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer item : cardNumber) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+        for (Integer item : map.values()) {
+            if (item == 4) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean isFullHouse(PokerCards pokerCards) {
