@@ -46,11 +46,11 @@ public class PokerHands {
         }
 
         if (rank == Rank.STRAIGHT.getRank()) {
-            return "straight: " + cardNumber[4];
+            return "straight: " + convertNumberToString(cardNumber[4]);
         }
 
         if (rank == Rank.THREE_KIND.getRank()) {
-            return "three of a kind: " + cardNumber[2];
+            return "three of a kind: " + convertNumberToString(cardNumber[2]);
         }
 
         if (rank == Rank.TWO_PAIR.getRank()) {
@@ -65,7 +65,7 @@ public class PokerHands {
                     second = cardNumber[i];
                 }
             }
-            return "two pairs: " + second;
+            return "two pairs: " + convertNumberToString(second);
         }
         if (rank == Rank.PAIR.getRank()) {
             int number = -1;
@@ -74,7 +74,7 @@ public class PokerHands {
                     number = cardNumber[i];
                 }
             }
-            return "pair of " + number;
+            return "pair of " + convertNumberToString(number);
         }
         return null;
     }
