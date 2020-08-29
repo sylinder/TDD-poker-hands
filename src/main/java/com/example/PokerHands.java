@@ -89,6 +89,11 @@ public class PokerHands {
     public String handleEqualRank(int rank, PokerCards blackPokerCards, PokerCards whitePokerCards) {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
+
+        if (rank == Rank.FULL_HOUSE.getRank()) {
+            return compareFullHouse(blackNumbers, whiteNumbers);
+        }
+
         if (rank == Rank.FLUSH.getRank()) {
             return compareFlush(blackNumbers, whiteNumbers);
         }
@@ -110,6 +115,13 @@ public class PokerHands {
         }
 
         return compareHighCard(blackNumbers, whiteNumbers);
+    }
+
+    private String compareFullHouse(int[] blackNumbers, int[] whiteNumbers) {
+        if (blackNumbers[2] > whiteNumbers[2]) {
+            return "Black wins. - with full house: " + blackNumbers[4] + " over " + blackNumbers[0];
+        }
+        return "White wins. - with full house: " + whiteNumbers[4] + " over " + whiteNumbers[0];
     }
 
     private String compareFlush(int[] blackNumbers, int[] whiteNumbers) {
