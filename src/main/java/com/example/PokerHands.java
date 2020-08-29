@@ -39,6 +39,11 @@ public class PokerHands {
 
     public String handleNoEqualRank(int rank, PokerCards pokerCards) {
         int[] cardNumber = pokerCards.getCardNumber();
+        char[] cardChar = pokerCards.getCardChar();
+
+        if (rank == Rank.FLUSH.getRank()) {
+            return "flush: " + cardChar[0];
+        }
 
         if (rank == Rank.STRAIGHT.getRank()) {
             return "straight: " + cardNumber[4];
@@ -215,6 +220,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if(isFlush(pokerCards)) {
+            return Rank.FLUSH.getRank();
+        }
         if (isStraight(pokerCards)) {
             return Rank.STRAIGHT.getRank();
         }
@@ -228,6 +236,15 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isFlush(PokerCards pokerCards) {
+        char[] cardChar = pokerCards.getCardChar();
+        Set<Character> set = new HashSet<>();
+        for (Character ch : cardChar) {
+            set.add(ch);
+        }
+        return set.size() == 1;
     }
 
     private boolean isStraight(PokerCards pokerCards) {
