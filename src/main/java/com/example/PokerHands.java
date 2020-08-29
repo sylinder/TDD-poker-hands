@@ -2,6 +2,7 @@ package com.example;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -41,6 +42,12 @@ public class PokerHands {
         int[] cardNumber = pokerCards.getCardNumber();
         char[] cardChar = pokerCards.getCardChar();
 
+        if (rank == Rank.FULL_HOUSE.getRank()) {
+            int first = cardNumber[0];
+            int last = cardNumber[cardNumber.length - 1];
+            int diff = first == cardNumber[2] ? last : first;
+            return "full house: " + cardNumber[2] + " over " + diff;
+        }
         if (rank == Rank.FLUSH.getRank()) {
             return "flush: " + cardChar[0];
         }
@@ -220,6 +227,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isFullHouse(pokerCards)) {
+            return Rank.FULL_HOUSE.getRank();
+        }
         if(isFlush(pokerCards)) {
             return Rank.FLUSH.getRank();
         }
@@ -236,6 +246,19 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isFullHouse(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer item : cardNumber) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+        Collection<Integer> values = map.values();
+        if (values.contains(3) && values.contains(2)) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isFlush(PokerCards pokerCards) {

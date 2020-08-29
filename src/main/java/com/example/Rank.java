@@ -1,6 +1,7 @@
 package com.example;
 
 public enum Rank {
+  FULL_HOUSE(7),
   FLUSH(6),
   STRAIGHT(5),
   THREE_KIND(4),

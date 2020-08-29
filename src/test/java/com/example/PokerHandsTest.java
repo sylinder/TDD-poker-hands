@@ -211,4 +211,16 @@ public class PokerHandsTest {
         //then
         assertThat(result).isEqualTo("White wins. - with flush: King");
     }
+
+    @Test
+    void should_return_black_win_when_compare_full_house_given_black_3H3D5S5C3D_and_white_2H3H5H9HKH() {
+        //given
+        String input = "3H 3D 5S 5C 3D 2H 3H 5H 9H KH";
+
+        //when
+        String result = pokerHands.playGame(input);
+
+        //then
+        assertThat(result).isEqualTo("Black wins. - with full house: 3 over 5");
+    }
 }
