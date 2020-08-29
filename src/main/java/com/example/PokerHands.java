@@ -42,6 +42,9 @@ public class PokerHands {
         int[] cardNumber = pokerCards.getCardNumber();
         char[] cardChar = pokerCards.getCardChar();
 
+        if (rank == Rank.STRAIGHT_FLUSH.getRank()) {
+            return "straight flush: " + convertNumberToString(cardNumber[4]);
+        }
         if (rank == Rank.FOUR_KIND.getRank()) {
             return "four of a kind: " + convertNumberToString(cardNumber[2]);
         }
@@ -252,6 +255,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isStraightFlush(pokerCards)) {
+            return Rank.STRAIGHT_FLUSH.getRank();
+        }
         if (isFourOfKind(pokerCards)) {
             return Rank.FOUR_KIND.getRank();
         }
@@ -274,6 +280,10 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isStraightFlush(PokerCards pokerCards) {
+        return isStraight(pokerCards) && isFlush(pokerCards);
     }
 
     private boolean isFourOfKind(PokerCards pokerCards) {

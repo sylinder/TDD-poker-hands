@@ -260,4 +260,16 @@ public class PokerHandsTest {
         //then
         assertThat(result).isEqualTo("White wins. - with four of a kind: 7");
     }
+
+    @Test
+    void should_return_black_win_when_compare_straight_flush_given_black_3H4H5H6H7H_and_white_7C7D7S7C2D() {
+        //given
+        String input = "3H 4H 5H 6H 7H 2D 8S 8C 8D 8H";
+
+        //when
+        String result = pokerHands.playGame(input);
+
+        //then
+        assertThat(result).isEqualTo("Black wins. - with straight flush: 7");
+    }
 }
