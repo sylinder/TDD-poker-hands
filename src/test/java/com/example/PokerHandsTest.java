@@ -116,4 +116,16 @@ public class PokerHandsTest {
     }
 
 
+    @Test
+    void should_return_black_win_when_compare_two_pairs_given_black_3H3D5S9C5D_and_white_4H4D5S8C5D(){
+        //given
+        String input = "3H 3D 5S 9C 5D 4H 4D 5S 8C 5D";
+
+        //when
+        String result = pokerHands.playGame(input);
+
+        //then
+        assertThat(result).isEqualTo("White wins. - with two pairs: 4");
+    }
+
 }
