@@ -90,4 +90,16 @@ public class PokerHandsTest {
         //then
         assertThat(result).isEqualTo("Black wins. - with two pairs: 5");
     }
+
+    @Test
+    void should_return_black_win_when_compare_two_pairs_given_black_3H3D5S9C9D_and_white_3H3D5S9C6D(){
+        //given
+        String input = "3H 3D 5S 9C 9D 3H 3D 5S 9C 6D";
+
+        //when
+        String result = pokerHands.compareTwoPairs(input);
+
+        //then
+        assertThat(result).isEqualTo("Black wins. - with two pairs: 9");
+    }
 }

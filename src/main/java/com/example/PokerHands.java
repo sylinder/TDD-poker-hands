@@ -1,6 +1,9 @@
 package com.example;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class PokerHands {
 
@@ -66,6 +69,11 @@ public class PokerHands {
         PokerCards blackPokerCards = new PokerCards();
         PokerCards whitePokerCards = new PokerCards();
         handleInput(input, blackPokerCards, whitePokerCards);
+        int blackRank = getRank(blackPokerCards);
+        int whiteRank = getRank(whitePokerCards);
+        if (blackRank == Rank.TWO_PAIR.getRank() && whiteRank == Rank.PAIR.getRank()) {
+            return "Black wins. - with two pairs: " + convertNumberToString(blackPokerCards.getCardNumber()[4]);
+        }
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
@@ -125,6 +133,28 @@ public class PokerHands {
         return "Tie";
     }
 
+    public int getRank(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer item : cardNumber) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+        if (map.keySet().size() == 5) {
+            return Rank.HIGH_CARD.getRank();
+        }
+        if (map.keySet().size() == 4) {
+            return Rank.PAIR.getRank();
+        }
+        ArrayList<Integer> arrayList = new ArrayList<>();
+        for (Integer item : map.values()) {
+            arrayList.add(item);
+        }
+        arrayList.sort((o1, o2) -> o1 - o2);
+        if (arrayList.get(1) != 2 && arrayList.get(2) != 2) {
+            return Rank.TWO_PAIR.getRank();
+        }
+        return -1;
+    }
 
     public int convertCharToNum(char ch) {
         if (ch == 'T') {
