@@ -1,9 +1,10 @@
 package com.example;
 
 public enum Rank {
-  HIGH_CARD(1),
+  THREE_KIND(4),
+  TWO_PAIR(3),
   PAIR(2),
-  TWO_PAIR(3);
+  HIGH_CARD(1);
 
   private final int rank;
 

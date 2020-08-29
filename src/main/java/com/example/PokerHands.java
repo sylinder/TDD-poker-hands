@@ -39,6 +39,11 @@ public class PokerHands {
 
     public String handleNoEqualRank(int rank, PokerCards pokerCards) {
         int[] cardNumber = pokerCards.getCardNumber();
+
+        if (rank == Rank.THREE_KIND.getRank()) {
+            return "three of a kind: " + cardNumber[2];
+        }
+
         if (rank == Rank.TWO_PAIR.getRank()) {
             int first = -1;
             int second = -1;
@@ -123,11 +128,6 @@ public class PokerHands {
     }
 
     public String compareTwoPairs(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-//        int blackRank = getRank(blackPokerCards);
-//        int whiteRank = getRank(whitePokerCards);
-//        if (blackRank == Rank.TWO_PAIR.getRank() && whiteRank == Rank.PAIR.getRank()) {
-//            return "Black wins. - with two pairs: " + convertNumberToString(blackPokerCards.getCardNumber()[4]);
-//        }
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
@@ -169,7 +169,6 @@ public class PokerHands {
             index++;
         }
 
-//        System.out.println(blackSingleNumber + " " + whiteSingleNumber);
         if (blackSecondPair > whiteSecondPair) {
             return "Black wins. - with two pairs: " + convertNumberToString(blackSecondPair);
         } else if (whiteSecondPair > blackSecondPair) {
@@ -189,6 +188,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isThreeOfKind(pokerCards)) {
+            return Rank.THREE_KIND.getRank();
+        }
         if (isTwoPair(pokerCards)) {
             return Rank.TWO_PAIR.getRank();
         }
@@ -196,6 +198,24 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isThreeOfKind(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        Map<Integer, Integer> map = new HashMap<>();
+        for (Integer item : cardNumber) {
+            map.put(item, map.getOrDefault(item, 0) + 1);
+        }
+        int highest = 0;
+        for (Integer item : map.values()) {
+            if (item > highest) {
+                highest = item;
+            }
+        }
+        if (highest == 3) {
+            return true;
+        }
+        return false;
     }
 
     private boolean isPair(PokerCards pokerCards) {

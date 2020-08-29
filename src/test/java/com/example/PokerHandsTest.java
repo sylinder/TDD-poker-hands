@@ -128,4 +128,15 @@ public class PokerHandsTest {
         assertThat(result).isEqualTo("White wins. - with two pairs: 4");
     }
 
+    @Test
+    void should_return_white_win_when_compare_three_of_a_kind_given_black_3H3D5S9C3D_and_white_4H4D5S9C6D(){
+        //given
+        String input = "3H 3D 5S 9C 3D 4H 4D 5S 9C 6D";
+
+        //when
+        String result= pokerHands.playGame(input);
+
+        //then
+        assertThat(result).isEqualTo("Black wins. - with three of a kind: 3");
+    }
 }
