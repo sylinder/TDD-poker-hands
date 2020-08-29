@@ -80,6 +80,10 @@ public class PokerHands {
     }
 
     public String handleEqualRank(int rank, PokerCards blackPokerCards, PokerCards whitePokerCards) {
+        if (rank == Rank.FLUSH.getRank()) {
+            return compareFlush(blackPokerCards, whitePokerCards);
+        }
+
         if (rank == Rank.STRAIGHT.getRank()) {
             return compareStraight(blackPokerCards, whitePokerCards);
         }
@@ -97,6 +101,14 @@ public class PokerHands {
         }
 
         return compareHighCard(blackPokerCards, whitePokerCards);
+    }
+
+    private String compareFlush(PokerCards blackPokerCards, PokerCards whitePokerCards) {
+        int[] blackNumbers = blackPokerCards.getCardNumber();
+        int[] whiteNumbers = whitePokerCards.getCardNumber();
+        return blackNumbers[4] > whiteNumbers[4] ?
+            "Black wins. - with flush: " + convertNumberToString(blackNumbers[4]) :
+            "White wins. - with flush: " + convertNumberToString(whiteNumbers[4]);
     }
 
     private String compareStraight(PokerCards blackPokerCards, PokerCards whitePokerCards) {
