@@ -37,7 +37,6 @@ public class PokerHands {
 
     }
 
-
     public String handleNoEqualRank(int rank, PokerCards pokerCards) {
         int[] cardNumber = pokerCards.getCardNumber();
         if (rank == Rank.TWO_PAIR.getRank()) {
@@ -95,7 +94,6 @@ public class PokerHands {
         return "Tie";
     }
 
-
     public String comparePair(PokerCards blackPokerCards, PokerCards whitePokerCards) {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
@@ -125,11 +123,11 @@ public class PokerHands {
     }
 
     public String compareTwoPairs(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int blackRank = getRank(blackPokerCards);
-        int whiteRank = getRank(whitePokerCards);
-        if (blackRank == Rank.TWO_PAIR.getRank() && whiteRank == Rank.PAIR.getRank()) {
-            return "Black wins. - with two pairs: " + convertNumberToString(blackPokerCards.getCardNumber()[4]);
-        }
+//        int blackRank = getRank(blackPokerCards);
+//        int whiteRank = getRank(whitePokerCards);
+//        if (blackRank == Rank.TWO_PAIR.getRank() && whiteRank == Rank.PAIR.getRank()) {
+//            return "Black wins. - with two pairs: " + convertNumberToString(blackPokerCards.getCardNumber()[4]);
+//        }
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
@@ -171,6 +169,7 @@ public class PokerHands {
             index++;
         }
 
+//        System.out.println(blackSingleNumber + " " + whiteSingleNumber);
         if (blackSecondPair > whiteSecondPair) {
             return "Black wins. - with two pairs: " + convertNumberToString(blackSecondPair);
         } else if (whiteSecondPair > blackSecondPair) {
@@ -262,7 +261,6 @@ public class PokerHands {
         }
         return String.valueOf(number);
     }
-
 
     public void handleInput(String input, PokerCards blackPokerCards, PokerCards whitePokerCards) {
         String[] black = new String[5];
