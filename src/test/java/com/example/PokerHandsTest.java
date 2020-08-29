@@ -104,7 +104,7 @@ public class PokerHandsTest {
     }
 
     @Test
-    void should_return_black_win_when_compare_two_pairs_given_black_3H3D5S2C5D_and_white_3H3D5S4C5D() {
+    void should_return_white_win_when_compare_two_pairs_given_black_3H3D5S2C5D_and_white_3H3D5S4C5D() {
         //given
         String input = "3H 3D 5S 2C 5D 3H 3D 5S 4C 5D";
 
@@ -117,7 +117,7 @@ public class PokerHandsTest {
 
 
     @Test
-    void should_return_black_win_when_compare_two_pairs_given_black_3H3D5S9C5D_and_white_4H4D5S8C5D(){
+    void should_return_white_win_when_compare_two_pairs_given_black_3H3D5S9C5D_and_white_4H4D5S8C5D(){
         //given
         String input = "3H 3D 5S 9C 5D 4H 4D 5S 8C 5D";
 
@@ -129,9 +129,21 @@ public class PokerHandsTest {
     }
 
     @Test
-    void should_return_white_win_when_compare_three_of_a_kind_given_black_3H3D5S9C3D_and_white_4H4D5S9C6D(){
+    void should_return_black_win_when_compare_three_of_a_kind_given_black_3H3D5S9C3D_and_white_4H4D5S9C6D(){
         //given
         String input = "3H 3D 5S 9C 3D 4H 4D 5S 9C 6D";
+
+        //when
+        String result= pokerHands.playGame(input);
+
+        //then
+        assertThat(result).isEqualTo("Black wins. - with three of a kind: 3");
+    }
+
+    @Test
+    void should_return_black_win_when_compare_three_of_a_kind_given_black_3H3D5S9C3D_and_white_4H2D5S9C6D() {
+        //given
+        String input = "3H 3D 5S 9C 3D 4H 2D 5S 9C 6D";
 
         //when
         String result= pokerHands.playGame(input);
