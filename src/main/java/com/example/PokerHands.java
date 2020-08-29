@@ -40,6 +40,10 @@ public class PokerHands {
     public String handleNoEqualRank(int rank, PokerCards pokerCards) {
         int[] cardNumber = pokerCards.getCardNumber();
 
+        if (rank == Rank.STRAIGHT.getRank()) {
+            return "straight: " + cardNumber[4];
+        }
+
         if (rank == Rank.THREE_KIND.getRank()) {
             return "three of a kind: " + cardNumber[2];
         }
@@ -199,6 +203,9 @@ public class PokerHands {
     }
 
     public int getRank(PokerCards pokerCards) {
+        if (isStraight(pokerCards)) {
+            return Rank.STRAIGHT.getRank();
+        }
         if (isThreeOfKind(pokerCards)) {
             return Rank.THREE_KIND.getRank();
         }
@@ -209,6 +216,16 @@ public class PokerHands {
             return Rank.PAIR.getRank();
         }
         return Rank.HIGH_CARD.getRank();
+    }
+
+    private boolean isStraight(PokerCards pokerCards) {
+        int[] cardNumber = pokerCards.getCardNumber();
+        for (int i = 0; i < cardNumber.length - 1; i++) {
+            if (cardNumber[i + 1] - cardNumber[i] != 1) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private boolean isThreeOfKind(PokerCards pokerCards) {
