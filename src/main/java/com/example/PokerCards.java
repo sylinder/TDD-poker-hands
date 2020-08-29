@@ -2,16 +2,16 @@ package com.example;
 
 import java.util.Arrays;
 
-public class Cards {
+public class PokerCards {
   private int[] cardNumber;
   private char[] cardChar;
 
-  public Cards(int[] cardNumber, char[] cardChar) {
+  public PokerCards(int[] cardNumber, char[] cardChar) {
     this.cardNumber = cardNumber;
     this.cardChar = cardChar;
   }
 
-  public Cards() {
+  public PokerCards() {
   }
 
   public int[] getCardNumber() {
