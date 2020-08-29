@@ -93,6 +93,9 @@ public class PokerHands {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
 
+        if (rank == Rank.FOUR_KIND.getRank()) {
+            return compareFourOfKind(blackNumbers, whiteNumbers);
+        }
         if (rank == Rank.FULL_HOUSE.getRank()) {
             return compareFullHouse(blackNumbers, whiteNumbers);
         }
@@ -118,6 +121,13 @@ public class PokerHands {
         }
 
         return compareHighCard(blackNumbers, whiteNumbers);
+    }
+
+    private String compareFourOfKind(int[] blackNumbers, int[] whiteNumbers) {
+        if (blackNumbers[2] > whiteNumbers[2]) {
+            return "Black wins. - with four of a kind: " + convertNumberToString(blackNumbers[2]);
+        }
+        return "White wins. - with four of a kind: " + convertNumberToString(whiteNumbers[2]);
     }
 
     private String compareFullHouse(int[] blackNumbers, int[] whiteNumbers) {
