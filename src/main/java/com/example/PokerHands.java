@@ -19,8 +19,8 @@ public class PokerHands {
         PokerCards whitePokerCards = new PokerCards();
         handleInput(input, blackPokerCards, whitePokerCards);
 
-        int blackRank = getRank(blackPokerCards);
-        int whiteRank = getRank(whitePokerCards);
+        int blackRank = getPokerRank(blackPokerCards);
+        int whiteRank = getPokerRank(whitePokerCards);
 
         if (blackRank < whiteRank) {
             String result = "White wins. - with ";
@@ -264,7 +264,7 @@ public class PokerHands {
         return "Tie";
     }
 
-    public int getRank(PokerCards pokerCards) {
+    public int getPokerRank(PokerCards pokerCards) {
         if (isStraightFlush(pokerCards)) {
             return Rank.STRAIGHT_FLUSH.getRank();
         }
