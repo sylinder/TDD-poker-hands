@@ -80,56 +80,50 @@ public class PokerHands {
     }
 
     public String handleEqualRank(int rank, PokerCards blackPokerCards, PokerCards whitePokerCards) {
+        int[] blackNumbers = blackPokerCards.getCardNumber();
+        int[] whiteNumbers = whitePokerCards.getCardNumber();
         if (rank == Rank.FLUSH.getRank()) {
-            return compareFlush(blackPokerCards, whitePokerCards);
+            return compareFlush(blackNumbers, whiteNumbers);
         }
 
         if (rank == Rank.STRAIGHT.getRank()) {
-            return compareStraight(blackPokerCards, whitePokerCards);
+            return compareStraight(blackNumbers, whiteNumbers);
         }
 
         if (rank == Rank.THREE_KIND.getRank()) {
-            return compareThreeOfKind(blackPokerCards, whitePokerCards);
+            return compareThreeOfKind(blackNumbers, whiteNumbers);
         }
         
         if (rank == Rank.TWO_PAIR.getRank()) {
-            return compareTwoPairs(blackPokerCards, whitePokerCards);
+            return compareTwoPairs(blackNumbers, whiteNumbers);
         }
 
         if (rank == Rank.PAIR.getRank()) {
-            return comparePair(blackPokerCards, whitePokerCards);
+            return comparePair(blackNumbers, whiteNumbers);
         }
 
-        return compareHighCard(blackPokerCards, whitePokerCards);
+        return compareHighCard(blackNumbers, whiteNumbers);
     }
 
-    private String compareFlush(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
+    private String compareFlush(int[] blackNumbers, int[] whiteNumbers) {
         return blackNumbers[4] > whiteNumbers[4] ?
             "Black wins. - with flush: " + convertNumberToString(blackNumbers[4]) :
             "White wins. - with flush: " + convertNumberToString(whiteNumbers[4]);
     }
 
-    private String compareStraight(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
+    private String compareStraight(int[] blackNumbers, int[] whiteNumbers) {
         return blackNumbers[4] > whiteNumbers[4] ?
             "Black wins. - with straight: " + convertNumberToString(blackNumbers[4]) :
             "White wins. - with straight: " + convertNumberToString(whiteNumbers[4]);
     }
 
-    private String compareThreeOfKind(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
+    private String compareThreeOfKind(int[] blackNumbers, int[] whiteNumbers) {
         return blackNumbers[2] > whiteNumbers[2] ?
             "Black wins. - with three of a kind: " + convertNumberToString(blackNumbers[2]) :
             "White wins. - with three of a kind: " + convertNumberToString(whiteNumbers[2]);
     }
 
-    public String compareHighCard(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
+    public String compareHighCard(int[] blackNumbers, int[] whiteNumbers) {
         for (int index = blackNumbers.length - 1; index >= 0; index--) {
             if (blackNumbers[index] > whiteNumbers[index]) {
                 String str = convertNumberToString(blackNumbers[index]);
@@ -143,10 +137,7 @@ public class PokerHands {
         return "Tie";
     }
 
-    public String comparePair(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
-
+    public String comparePair(int[] blackNumbers, int[] whiteNumbers) {
         int pairNumberOfBlack = -1;
         int pairNumberOfWhite = -1;
         for (int i = 0; i < blackNumbers.length - 1; i++) {
@@ -168,13 +159,10 @@ public class PokerHands {
         } else if (pairNumberOfBlack < pairNumberOfWhite) {
             return "White wins. - with pair of " + convertNumberToString(pairNumberOfWhite);
         }
-        return compareHighCard(blackPokerCards, whitePokerCards);
+        return compareHighCard(blackNumbers, whiteNumbers);
     }
 
-    public String compareTwoPairs(PokerCards blackPokerCards, PokerCards whitePokerCards) {
-        int[] blackNumbers = blackPokerCards.getCardNumber();
-        int[] whiteNumbers = whitePokerCards.getCardNumber();
-
+    public String compareTwoPairs(int[] blackNumbers, int[] whiteNumbers) {
         int blackFirstPair = -1, blackSecondPair = -1, blackSingleNumber = -1;
         int whiteFirstPair = -1, whiteSecondPair = -1, whiteSingleNumber = -1;
         int index = 0;
