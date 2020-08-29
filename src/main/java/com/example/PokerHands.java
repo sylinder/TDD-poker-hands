@@ -106,8 +106,8 @@ public class PokerHands {
         int[] blackNumbers = blackPokerCards.getCardNumber();
         int[] whiteNumbers = whitePokerCards.getCardNumber();
         return blackNumbers[2] > whiteNumbers[2] ?
-            "Black wins. - with three of a kind: " + blackNumbers[2] :
-            "White wins. - with three of a kind: " + whiteNumbers[2];
+            "Black wins. - with three of a kind: " + convertNumberToString(blackNumbers[2]) :
+            "White wins. - with three of a kind: " + convertNumberToString(whiteNumbers[2]);
     }
 
     public String compareHighCard(PokerCards blackPokerCards, PokerCards whitePokerCards) {
