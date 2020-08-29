@@ -71,7 +71,10 @@ public class PokerHands {
     }
 
     public String handleEqualRank(int rank, PokerCards blackPokerCards, PokerCards whitePokerCards) {
-
+        if (rank == Rank.THREE_KIND.getRank()) {
+            return compareThreeOfKind(blackPokerCards, whitePokerCards);
+        }
+        
         if (rank == Rank.TWO_PAIR.getRank()) {
             return compareTwoPairs(blackPokerCards, whitePokerCards);
         }
@@ -81,6 +84,14 @@ public class PokerHands {
         }
 
         return compareHighCard(blackPokerCards, whitePokerCards);
+    }
+
+    private String compareThreeOfKind(PokerCards blackPokerCards, PokerCards whitePokerCards) {
+        int[] blackNumbers = blackPokerCards.getCardNumber();
+        int[] whiteNumbers = whitePokerCards.getCardNumber();
+        return blackNumbers[2] > whiteNumbers[2] ?
+            "Black wins. - with three of a kind: " + blackNumbers[2] :
+            "White wins. - with three of a kind: " + whiteNumbers[2];
     }
 
     public String compareHighCard(PokerCards blackPokerCards, PokerCards whitePokerCards) {
